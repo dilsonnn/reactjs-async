@@ -13,7 +13,7 @@
 	  '/home': {
 		 render: 'Welcome to home page'
 	  },
-	  '/about': 'Middle Earth Jornal is a company who produces news about middle earth and the adventures in the land of Sauron.',
+	  '/about': 'Middle Earth Journal is a company who produces news about middle earth and the adventures in the land of Sauron.',
 	  '/contact': 'React & Routing',
 	  '/news': {
 		  url: './news/news.js'
@@ -31,7 +31,7 @@
 	};
 	var initialState = {
 		header: {
-			title: 'Middle Earth Jornal'
+			title: 'Middle Earth Journal'
 		},
 		footer: {
 			title: 'Copyright Frodo Baggins, 2019.'
