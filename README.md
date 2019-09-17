@@ -1,5 +1,7 @@
-# reactjs-async
+# A simple project with loading js / css asynchronous. 
 
-A example js / css lazy loading project
+Created as a small PoC to learn how async loading works.
 
 :arrow_forward: [Live version](https://undefined-sin.github.io/reactjs-async/#home).
+
+:warning: The source code formatting is broken, might add lint later.
