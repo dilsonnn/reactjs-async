@@ -1,4 +1,4 @@
-# A simple project with loading js / css asynchronous. 
+# A simple project that loads js / css asynchronous. 
 
 Created as a small PoC to learn how async loading works.
 
