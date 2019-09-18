@@ -1,0 +1,15 @@
+{
+  "name": "reactjs-async",
+  "version": "1.0.0",
+  "description": "Created as a small PoC to learn how async loading works.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "lint": "eslint src/**/*.js"
+  },
+  "devDependencies": {
+    "eslint": "^6.4.0"
+  }
+}

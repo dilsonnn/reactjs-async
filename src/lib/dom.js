@@ -1,3 +1,4 @@
+/*global window,document,React,Promise,setTimeout */
 function registerInternal(container){
    return function() {
     return {
@@ -14,15 +15,15 @@ function registerInternal(container){
           }
           container[path] = function() {
             return callback;
-          }
+          };
         }
       },
       get: function(path) {
         return container[path];
       }
-    }
+    };
   };
-};
+}
 
 window.bundleRegister = (function() {
   var container = {};
@@ -46,13 +47,13 @@ function FileLoader(baseUrl) {
   };
   
   this.removeFromQueue = function(file){
-	this.loadingQueue = loadingQueue.filter(function(e) {
+    this.loadingQueue = loadingQueue.filter(function(e) {
       return e.file == file;
     });
   };
   
   this.addToQueue = function(file, promise){
-	loadingQueue.push({
+    loadingQueue.push({
       file: file,
       promise: promise
     });
@@ -63,9 +64,9 @@ function FileLoader(baseUrl) {
     if (found) {
       return found.promise;
     }
-	var _this = this;
+    var _this = this;
     var promise = new Promise(function(resolve, reject) {
-	  var script = document.createElement('script');
+      var script = document.createElement('script');
       script.src = baseUrl + '/' + file;
       script.async = true;
       script.type = 'text/javascript';
@@ -110,21 +111,22 @@ function FileLoader(baseUrl) {
     _this.addToQueue(file, promise);
     return promise;
   };
-};
+}
 
 
 (window.domApi = new function() {
+  // eslint-disable-next-line
   console.log('Initializing domAPI');
   var fileLoader;
   this.setAssetUrl = function(url) {
-	fileLoader = new FileLoader(url);
-	window.__ASSETS__URL = url;
+    fileLoader = new FileLoader(url);
+    window.__ASSETS__URL = url;
   };
   
   this.getAssetUrl = function(){
-	return window.__ASSETS__URL;  
-  };	
-	
+    return window.__ASSETS__URL;  
+  };    
+    
   class WidgetLoader extends React.Component {
     constructor(props) {
       super(props);
@@ -134,24 +136,24 @@ function FileLoader(baseUrl) {
     }
 
     componentDidMount() {
-	  if (this.props.css) {
+      if (this.props.css) {
         fileLoader.dynamicLoadCss(this.props.css);
       }
-	  fileLoader.dynamicLoad(this.props.file).then((function() {
+      fileLoader.dynamicLoad(this.props.file).then((function() {
         this.setState({
           loaded: true,
           file: this.props.file
         });
       }).bind(this))
-	  .catch((function(){
-		  this.setState({
+      .catch((function(){
+          this.setState({
           loaded: true
         });
-	  }).bind(this));
+      }).bind(this));
     }
 
     render() {
-	  if (!this.state.loaded) {
+      if (!this.state.loaded) {
         if (this.props.loadingRender) {
           return this.props.loadingRender;
         }
@@ -166,19 +168,17 @@ function FileLoader(baseUrl) {
   }
 
   function doesPatternMatch(pattern, currentUrl) {
-    var str = '';
-
     if (!currentUrl.startsWith('/')) {
       currentUrl = '/' + currentUrl;
     }
     if (!pattern.startsWith('/')) {
       pattern = '/' + pattern;
     }
-	
-	if(currentUrl.endsWith('/')){
-		currentUrl = currentUrl.substring(0, currentUrl.length - 1);
-	}
-	
+    
+    if(currentUrl.endsWith('/')){
+        currentUrl = currentUrl.substring(0, currentUrl.length - 1);
+    }
+    
     var parts = currentUrl.split('/');
     var patternParts = pattern.split('/');
     var match = true;
@@ -205,7 +205,6 @@ function FileLoader(baseUrl) {
     if (!path || !path[1]) {
       return '/';
     }
-	var parts = path[1].split('/');
     var pattern = Object.keys(routes)
       .filter(function(route) {
         return doesPatternMatch(route, path[1]);
@@ -225,7 +224,7 @@ function FileLoader(baseUrl) {
 
     constructor(props) {
       super(props);
-	  var mapping = getPath(props.routes);
+      var mapping = getPath(props.routes);
       this.state = {
         route: mapping.url,
         history: []
@@ -237,7 +236,7 @@ function FileLoader(baseUrl) {
 
     changeRoute(mapping) {
       var route = mapping.url;
-	  if (this.state.route === route) {
+      if (this.state.route === route) {
         return;
       }
       var newHistory = this.state.history.concat([]);
@@ -250,7 +249,7 @@ function FileLoader(baseUrl) {
     }
 
     componentDidMount() {
-      window.onpopstate = function(e) {
+      window.onpopstate = function() {
         var mapping = getPath(this.props.routes);
         this.changeRoute(mapping);
       }.bind(this);
@@ -268,11 +267,11 @@ function FileLoader(baseUrl) {
     }
 
     loadRoute() {
-	  if(!this.state.route){
-		  return null;
-	  }	
+      if(!this.state.route){
+          return null;
+      } 
       var route = this.props.routes[this.state.route];
-	  if (route && typeof route.url === 'string' && route.url.indexOf('.js')) {
+      if (route && typeof route.url === 'string' && route.url.indexOf('.js')) {
         if (this.bundleRegister.get(route.url)) {
           return;
         }
@@ -301,10 +300,10 @@ function FileLoader(baseUrl) {
         if (this.props.loadingRender) {
           return this.props.loadingRender;
         }
-		return null;
+        return null;
       }
       var route = this.props.routes[this.state.route];
-	  if (!route) {
+      if (!route) {
         return null;
       }
 
@@ -335,21 +334,21 @@ function FileLoader(baseUrl) {
 
       return React.cloneElement(route, props, route);
     }
-  };
+  }
   
   function checkForFileLoader(){
-	if(!fileLoader){
-	   throw new Error('File loader not initialized properly... Have you properly called setAssetUrl()?');	
-	} 
+    if(!fileLoader){
+       throw new Error('File loader not initialized properly... Have you properly called setAssetUrl()?');  
+    } 
   }
   
   this.Router = function(props, children) {
-	checkForFileLoader();
+    checkForFileLoader();
     return React.createElement(RouterComponent, props, children);
   };
 
   this.WidgetLoader = function(props, children) {
-	checkForFileLoader();  
-	return React.createElement(WidgetLoader, props, children);
+    checkForFileLoader();  
+    return React.createElement(WidgetLoader, props, children);
   };
 });
