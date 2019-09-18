@@ -4,7 +4,7 @@ bundleRegister().set('./bootstrap/footer.js', function (props){
 	  className: 'Footer'
    }, props);
    
-   var loader = window.domApi.WidgetLoader;
+   var loader = domApi.WidgetLoader;
    
    var widget = loader({
 	   file: './widgets/banner.js',
@@ -15,5 +15,6 @@ bundleRegister().set('./bootstrap/footer.js', function (props){
 	   }, null)
    });
    
-   return e('div', newProps, props.title, widget, widget, widget);
+   var element = e('div', newProps, props.title, widget, widget, widget);
+   return element;
 });

@@ -19,9 +19,13 @@ class Header extends React.Component{
 	  menuOptions[i]
 	  )));	
 	}
+	var transferMoney = e('a', {
+		href: '#pages/transfer',
+	   }, 'Transfer money'
+	  );
 	var listOfMenus = e('ul', null, elements);
 	return e('div', { className: 'Header'}, [
-	  e('span', null, this.props.title), listOfMenus
+	  e('span', null, this.props.title), listOfMenus, transferMoney
 	]);
   };
 }

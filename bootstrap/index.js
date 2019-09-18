@@ -1,41 +1,58 @@
-(function (){
-	
-	var layout = [
-	  { file:'lib/dom'},
-	  { file: 'bootstrap/footer', css: true},
-	  { file:'bootstrap/header', css: true}
-	];
+function loadAsyncFile(fileName){
+	  return new Promise(function(success, reject){
+		var script = document.createElement('script');
+		script.src = fileName;
+		script.type = 'text/javascript';
+		script.async = true;
+		script.id = fileName;
+        script.onload = success;
+		script.onerror = reject;
+		document.body.appendChild(script);
+	  });
+};
 
-	var routes = {
-	  '/': {
-		 render: 'Index'
+
+function loadAsyncCssFile(file){
+   return new Promise(function(success, reject){
+	 var css = document.createElement('link');  
+	 css.rel = 'stylesheet';
+	 css.type = 'text/css';
+	 css.href = file;
+	 css.id = file;
+	 document.body.appendChild(css);
+   });
+};
+
+(function (){
+	var layout = [
+	  { file:'routes.js'},
+	  { file:'lib/redux-min.js'},
+	  { file:'lib/dom.js'},
+	  { file: 'bootstrap/footer.js', css: 'bootstrap/footer.css'},
+	  { file:'bootstrap/header.js', css: 'bootstrap/header.css'}
+	];
+	
+	// Static rendered, should NEVER change during the session.
+	__GLOBAL_STATIC_CONTEXT__ = Object.freeze({
+	  session: {
+		// Rendered by server side.
+		licenseKey: '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a91',
+		sessionId: '3f3af1ecebbd1410ab417ec0d27bbfcb5d340e177ae159b59fc8626c2dfd9175',
+		accessToken: '5270935051149081442358916296234999014127',
+		assetsUrl: './' 
 	  },
-	  '/home': {
-		 render: 'Welcome to home page'
-	  },
-	  '/about': 'Middle Earth Journal is a company who produces news about middle earth and the adventures in the land of Sauron.',
-	  '/contact': 'React & Routing',
-	  '/news': {
-		  url: './news/news.js'
-	  },
-	  '/login': {
-		  url: './login/login.js',
-		  css: './login/login.css'
-	  },
-	  '/news/{id}': {
-		  url: './news/newsView.js'
-	  },
-	  '/news/{id}/author': {
-		  url: './news/newsAuthor.js'
+	  userContext: {
+		  id: 'admin',
+		  name: 'Adilson'
 	  }
-	};
+	});
+	// End of static rendered.
+	
 	var initialState = {
-		header: {
-			title: 'Middle Earth Journal'
-		},
-		footer: {
-			title: 'Copyright Frodo Baggins, 2019.'
-		}
+	  session: {
+		language: 'en',
+	    theme: 'theme1'   
+	  }
 	};
 	
 	function layoutInitializer(layoutEntries){
@@ -44,48 +61,52 @@
 		  if(!currentScript){
 			  return;
 		  }
-		  var fileName = currentScript.file;
-		  var script = document.createElement('script');
-		  script.src = './' + fileName + '.js';
-		  script.type = 'text/javascript';
-		  script.async = true;
-		  script.id = fileName;
-		  script.onload = function (){
-			 initializeScripts();
-		  };
-		  if(currentScript.css){
-			 var css = document.createElement('link');  
-			 css.rel = 'stylesheet';
-			 css.type = 'text/css';
-			 css.href = './' + fileName + '.css';
-			 document.body.appendChild(css);
-		  }
-		  document.body.appendChild(script);
-	   return initializeScripts;
+		  loadAsyncFile(currentScript.file).then(function(){
+			  initializeScripts();
+		  });
+		  
+		  currentScript.css && Promise.resolve(loadAsyncCssFile(currentScript.css));
+		  
+	      return initializeScripts;
 	  };	
 	};
 	
 	layoutInitializer(layout)();
-
-	window.onload = function() {
-	  console.log('Starting application');
-	  var registerBundleApi = bundleRegister();
-	  var createHeader = registerBundleApi.get('./bootstrap/header.js');
-	  var createFooter = registerBundleApi.get('./bootstrap/footer.js');
-	  var e = React.createElement;
-	  
-	  var mainApp = e('div',{}, createHeader(initialState.header),
-	  e('div', { className: 'Container'}, domApi.Router({
-		  routes: routes,
-		  bundleRegister: registerBundleApi,
-		  loadingRender: e('span', {
-		    className: 'loader'
-	       }, null
-		  )
-	  })),
-	  createFooter(initialState.footer));
-	  ReactDOM.render(mainApp, document.querySelector('#application'));
+	
+	function renderApp(){
+		var domApi = window.domApi;
+		domApi.setAssetUrl(__GLOBAL_STATIC_CONTEXT__.session.assetsUrl);
+		var registerBundleApi = bundleRegister();
+		var createHeader = registerBundleApi.get('./bootstrap/header.js');
+		var createFooter = registerBundleApi.get('./bootstrap/footer.js');
+		var e = React.createElement;
+		var mainApp = e('div',{}, createHeader({ title: 'Middle Earth Jornal'}),
+			 e('div', { className: 'Container'}, domApi.Router({
+			  routes: this.applicationRoutes,
+			   bundleRegister: registerBundleApi,
+			   loadingRender: e('span', {
+			   className: 'loader'
+				 }, null
+				)
+			})),
+			createFooter({ title: 'Copyright Frodo Baggins, 2019.'})
+		  
+		  );
+		  ReactDOM.render(mainApp, document.querySelector('#application'));
+		
 	};
+	
+	function globalReducer(state, action){
+		return state;
+	}
+	
+	window.onload = function() {
+	  window.__GLOBAL__STORE = Redux.createStore(globalReducer, initialState);
+	  renderApp();
+	};
+	
+	
+	
 	
 })();
 

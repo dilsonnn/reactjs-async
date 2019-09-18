@@ -1,4 +1,4 @@
-bundleRegister().set('./news/news.js', function(){
+bundleRegister().set('news/news.js', function(){
 	var e = React.createElement;
 	return e('div', {}, 
 	  e('h1', null, 'Those are the middle earth news:'),
