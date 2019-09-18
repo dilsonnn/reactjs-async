@@ -28,10 +28,10 @@ function loadAsyncCssFile(file){
 
 (function (){
     var layout = [
-      { file:'routes.js'},
-      { file:'lib/dom.js'},
+      { file: 'routes.js'},
+      { file: 'lib/dom.js'},
       { file: 'bootstrap/footer.js', css: 'bootstrap/footer.css'},
-      { file:'bootstrap/header.js', css: 'bootstrap/header.css'}
+      { file: 'bootstrap/header.js', css: 'bootstrap/header.css'}
     ];
     
     // Static rendered, should NEVER change during the session.
