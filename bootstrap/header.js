@@ -4,10 +4,9 @@ class Header extends React.Component{
 	super(props);
   }	 
     	
-   
-	
   render(){
-	var menuOptions = ['home', 'about', 'contact', 'news', 'login'];
+	var menuOptionsLabels = ['Acounts', 'Profile', 'Security'];
+	var menuOptions = ['accounts', 'profile', 'security'];
 	var elements = [];
 	var e = React.createElement;
 	for(var i = 0; i < menuOptions.length; i++){
@@ -16,16 +15,19 @@ class Header extends React.Component{
 	  {
 		href: "#" + menuOptions[i]
 	  },
-	  menuOptions[i]
+	  menuOptionsLabels[i]
 	  )));	
-	}
+	};
 	var transferMoney = e('a', {
 		href: '#pages/transfer',
-	   }, 'Transfer money'
-	  );
+	   }, 'Send money'
+	);
+	elements.push(
+	  e('li', {}, transferMoney)
+	);
 	var listOfMenus = e('ul', null, elements);
 	return e('div', { className: 'Header'}, [
-	  e('span', null, this.props.title), listOfMenus, transferMoney
+	  e('span', null, this.props.title), listOfMenus
 	]);
   };
 }

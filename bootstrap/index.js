@@ -80,7 +80,7 @@ function loadAsyncCssFile(file){
 		var createHeader = registerBundleApi.get('./bootstrap/header.js');
 		var createFooter = registerBundleApi.get('./bootstrap/footer.js');
 		var e = React.createElement;
-		var mainApp = e('div',{}, createHeader({ title: 'Middle Earth Jornal'}),
+		var mainApp = e('div',{}, createHeader({ title: 'Foo bank'}),
 			 e('div', { className: 'Container'}, domApi.Router({
 			  routes: this.applicationRoutes,
 			   bundleRegister: registerBundleApi,
@@ -89,7 +89,7 @@ function loadAsyncCssFile(file){
 				 }, null
 				)
 			})),
-			createFooter({ title: 'Copyright Frodo Baggins, 2019.'})
+			createFooter({ title: ''})
 		  
 		  );
 		  ReactDOM.render(mainApp, document.querySelector('#application'));
