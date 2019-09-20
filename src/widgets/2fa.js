@@ -1,4 +1,5 @@
 /*global React,widgetRegister */
+import React from 'react';
 widgetRegister().set('./widgets/2fa.js', function(props){
     var e = React.createElement;
     const newProps = Object.assign({}, props);

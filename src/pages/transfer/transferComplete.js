@@ -1,4 +1,5 @@
 /*global React,bundleRegister */
+import React from 'react';
 (function(){
     bundleRegister().set('pages/transfer/transferComplete.js', function(){
         var e = React.createElement;

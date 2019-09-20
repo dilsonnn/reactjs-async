@@ -1,6 +1,6 @@
 
 /*global React,widgetRegister */
-
+import React from 'react';
 function randomFromArr(items){
   return items[Math.floor(Math.random() * items.length)];   
 }

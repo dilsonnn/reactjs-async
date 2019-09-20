@@ -1,4 +1,5 @@
 /*global React,widgetRegister,bundleRegister,domApi */
+import React from 'react';
 bundleRegister().set('./bootstrap/footer.js', function (props){
    var e = React.createElement;
    var newProps = Object.assign({

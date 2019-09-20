@@ -8,7 +8,8 @@
   },
   "scripts": {
     "lint": "eslint src/**/*.js",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --hot --inline"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
@@ -19,7 +20,8 @@
     "eslint": "^6.4.0",
     "prop-types": "^15.7.2",
     "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
   },
   "dependencies": {
     "react": "^16.9.0",
