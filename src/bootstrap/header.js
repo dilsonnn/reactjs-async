@@ -1,4 +1,4 @@
-/*global React,bundleRegister */
+import React from 'react';
 
 class Header extends React.Component{
     
@@ -7,7 +7,7 @@ class Header extends React.Component{
   }  
         
   render(){
-    var menuOptionsLabels = ['Acounts', 'Profile', 'Security'];
+    var menuOptionsLabels = ['Accounts', 'Profile', 'Security'];
     var menuOptions = ['accounts', 'profile', 'security'];
     var elements = [];
     var e = React.createElement;

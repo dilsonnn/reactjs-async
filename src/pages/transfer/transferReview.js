@@ -1,4 +1,5 @@
 /*global document,React,widgetRegister,bundleRegister,domApi */
+import React from 'react';
 (function(){
     class TransferReview extends React.Component{
         

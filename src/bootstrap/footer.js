@@ -1,10 +1,16 @@
 /*global React,widgetRegister,bundleRegister,domApi */
+import React from 'react';
+import style from './footer.scss';
+
+
+console.log(style);
 bundleRegister().set('./bootstrap/footer.js', function (props){
    var e = React.createElement;
    var newProps = Object.assign({
-      className: 'Footer'
+      className: style.Footer
    }, props);
    
+   console.log(style.Footer);
    var loader = domApi.WidgetLoader;
    
    var widget = loader({

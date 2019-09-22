@@ -1,4 +1,6 @@
 /*global window,document,React,bundleRegister,Promise,ReactDOM,__GLOBAL_STATIC_CONTEXT__*/
+import React from 'react';
+import ReactDOM from 'react-dom';
 function loadAsyncFile(fileName){
       return new Promise(function(success, reject){
         var script = document.createElement('script');
@@ -25,9 +27,8 @@ function loadAsyncCssFile(file){
      document.body.appendChild(css);
    });
 }
-
 (function (){
-    var layout = [
+	var layout = [
       { file: 'routes.js'},
       { file: 'lib/dom.js'},
       { file: 'bootstrap/footer.js', css: 'bootstrap/footer.css'},
@@ -36,7 +37,7 @@ function loadAsyncCssFile(file){
     
     // Static rendered, should NEVER change during the session.
     //eslint-disable-next-line
-    __GLOBAL_STATIC_CONTEXT__ = Object.freeze({
+    this.__GLOBAL_STATIC_CONTEXT__ = Object.freeze({
       session: {
         // Rendered by server side.
         licenseKey: '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a91',
@@ -78,7 +79,8 @@ function loadAsyncCssFile(file){
     
     function renderApp(){
         var domApi = window.domApi;
-        domApi.setAssetUrl(__GLOBAL_STATIC_CONTEXT__.session.assetsUrl);
+		console.log("render", this);
+        domApi.setAssetUrl(this.__GLOBAL_STATIC_CONTEXT__.session.assetsUrl);
         var registerBundleApi = bundleRegister();
         var createHeader = registerBundleApi.get('./bootstrap/header.js');
         var createFooter = registerBundleApi.get('./bootstrap/footer.js');
@@ -96,7 +98,6 @@ function loadAsyncCssFile(file){
           
           );
           ReactDOM.render(mainApp, document.querySelector('#application'));
-        
     }
     
     /*function globalReducer(state, action){
@@ -105,11 +106,11 @@ function loadAsyncCssFile(file){
     */
     window.onload = function() {
       //window.__GLOBAL__STORE = Redux.createStore(globalReducer, initialState);
-      renderApp();
+      renderApp.bind(this)();
     };
     
     
     
     
-})();
+}).bind(window)();
 

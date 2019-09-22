@@ -1,4 +1,5 @@
 /*global window,document,React,Promise,setTimeout */
+import React from 'react';
 function registerInternal(container){
    return function() {
     return {

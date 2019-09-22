@@ -1,10 +1,20 @@
 const path = require('path');
+const webpack = require("webpack");
 const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const commonConfig = {
     module: {
         rules: [
           {
+			test: /\.(scss|css)$/,
+			use: [
+			  MiniCssExtractPlugin.loader,
+			  'css-loader',
+			  'sass-loader',
+            ]
+         },
+		 {
             test: /\.(js|jsx)$/,
             exclude: /node_modules/,
             use: {
@@ -13,13 +23,29 @@ const commonConfig = {
           }
         ]
     },
+	devtool: 'source-map',
+	plugins: [
+		new MiniCssExtractPlugin({
+		  // Options similar to the same options in webpackOptions.output
+		  // both options are optional
+		  filename: '[name].css',
+		  chunkFilename: '[id].css',
+		})
+    ]
 };
 const newConfig = (config) => {
    return Object.assign({}, commonConfig, config);
 };
 
 const bootstrapFiles = newConfig({
-    entry: './src/routes.js',
+    entry: {
+		'bootstrap/footer': './src/bootstrap/footer.js',
+		'bootstrap/header': './src/bootstrap/header.js',
+		'bootstrap/index': './src/bootstrap/index.js',
+		'lib/dom': './src/lib/dom.js',
+		'widgets/2fa': './src/widgets/2fa.js',
+		'widgets/banner': './src/widgets/banner.js'
+	},
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist')
@@ -27,8 +53,7 @@ const bootstrapFiles = newConfig({
     plugins: [
         new CopyPlugin([
           { from: './src/routes.js', to: 'routes.js' },
-          { from: './src/bootstrap', to: 'bootstrap' },
-          { from: './src/lib', to: 'lib' },
+          { from: './src/bootstrap/header.css', to: 'bootstrap/header.css' },
           { from: './src/widgets', to: 'widgets' },
           { from: './src/index.html', to: 'index.html' },
           { from: './src/index.css', to: 'index.css' },
