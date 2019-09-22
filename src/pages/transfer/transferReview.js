@@ -1,5 +1,7 @@
 /*global document,React,widgetRegister,bundleRegister,domApi */
 import React from 'react';
+import styles from '../../bootstrap/index.scss';
+console.log(styles);
 (function(){
     class TransferReview extends React.Component{
         
@@ -15,7 +17,7 @@ import React from 'react';
              widgetRegister: widgetRegister(),
              handleConfirm: this.handleConfirmation,
              loadingRender: e('span', {
-                className: 'loader'
+                className: styles.loader
              }, null)
            });
         }
