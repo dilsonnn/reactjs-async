@@ -1,7 +1,9 @@
+/*global require,__dirname*/
 const path = require('path');
-const webpack = require("webpack");
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const JS_PATH = 'js';
 
 const commonConfig = {
     module: {
@@ -9,7 +11,9 @@ const commonConfig = {
           {
             test: /\.(scss|css)$/,
             use: [
-              MiniCssExtractPlugin.loader,
+              {
+                loader: MiniCssExtractPlugin.loader,
+              },
               {
                 loader: 'css-loader',
                 options: {
@@ -37,8 +41,8 @@ const commonConfig = {
 		new MiniCssExtractPlugin({
    // Options similar to the same options in webpackOptions.output
    // both options are optional
-	filename: '[name].css',
-	chunkFilename: '[id].css',
+   filename: 'css/[name].css',
+   chunkFilename: '[id].css'
 	})
  ]
 };
@@ -57,14 +61,14 @@ const bootstrapFiles = newConfig({
 		'widgets/banner': './src/widgets/banner.js'
 	},
     output: {
-        filename: '[name].js',
+        filename: `${JS_PATH}/[name].js`,
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
         ...commonConfig.plugins,
         new CopyPlugin([
-          { from: './src/routes.js', to: 'routes.js' },
-          { from: './src/index.html', to: 'index.html' },
+          { from: './src/routes.js', to: `${JS_PATH}/routes.js` },
+          { from: './src/index.html', to: 'index.html' }
         ]),
       ],
 });
@@ -77,7 +81,7 @@ const transferPage = newConfig({
     },
     output: {
       filename: '[name].js',
-      path: path.resolve(__dirname, 'dist/pages/transfer')
+      path: path.resolve(__dirname, `dist/${JS_PATH}/pages/transfer`)
     }
 });
 

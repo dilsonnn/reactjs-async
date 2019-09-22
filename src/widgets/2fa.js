@@ -1,11 +1,8 @@
-/*global React,widgetRegister */
 import React from 'react';
 widgetRegister().set('./widgets/2fa.js', function(props){
-    var e = React.createElement;
-    const newProps = Object.assign({}, props);
-    return e('div', {}, 
-     e('h2', {}, 'Provide the number 45 in your card:'),
-     e('input', { }, null),
-     e('input', { type: 'submit', value: 'Confirm transaction', onClick: newProps.handleConfirm }, null)
-    );
+    return (<div>
+        <h2> Provide number 45 in your card. </h2>
+        <input></input>
+        <input type="submit" value="Confirm your transaction" onClick={props.handleConfirm} />
+    </div>);
 });

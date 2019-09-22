@@ -1,4 +1,4 @@
-/*global window,document,React,Promise,setTimeout */
+/*global window,document,Promise,setTimeout */
 import React from 'react';
 function registerInternal(container){
    return function() {
@@ -39,7 +39,7 @@ window.widgetRegister = (function() {
 })();
 
 
-function FileLoader(baseUrl) {
+function FileLoader(config) {
   var loadingQueue = [];
   this.getIfLoading = function(file) {
     return loadingQueue.find(function(e) {
@@ -68,7 +68,7 @@ function FileLoader(baseUrl) {
     var _this = this;
     var promise = new Promise(function(resolve, reject) {
       var script = document.createElement('script');
-      script.src = baseUrl + '/' + file;
+      script.src = config.jsPath + '/' + file;
       script.async = true;
       script.type = 'text/javascript';
       script.id = file;
@@ -98,7 +98,7 @@ function FileLoader(baseUrl) {
       css.rel = 'stylesheet';
       css.type = 'text/css';
       css.id = file;
-      css.href = baseUrl + '/' + file;
+      css.href = config.cssPath + '/' + file;
       css.onload = function() {
         _this.removeFromQueue(file);
         resolve(true);
@@ -119,9 +119,9 @@ function FileLoader(baseUrl) {
   // eslint-disable-next-line
   console.log('Initializing domAPI');
   var fileLoader;
-  this.setAssetUrl = function(url) {
-    fileLoader = new FileLoader(url);
-    window.__ASSETS__URL = url;
+  this.setResources = function(config) {
+    fileLoader = new FileLoader(config);
+    window.__RESOURCES__INFO__= config;
   };
   
   this.getAssetUrl = function(){

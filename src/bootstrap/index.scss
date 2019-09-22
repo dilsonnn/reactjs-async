@@ -58,7 +58,8 @@ table {
   padding: 1rem;
   height: auto;
   display: block;
-   background-color: white;
+  background-color: white;
+  min-height: 50%;
 }
 .Container > div{
   animation: fadeIn 2s;
