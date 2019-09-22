@@ -8,8 +8,14 @@
   text-align: center;
 }
 
+.Logo > img {
+  width: 150px;
+  height: 100px;
+  float: left;
+}
+
 .Header ul {
-  margin: 0;
+  padding: 1.25rem;
   list-style: none;
   border: 0;
   margin: 10px;

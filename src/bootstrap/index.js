@@ -45,7 +45,8 @@ function loadAsyncCssFile(file){
         sessionId: '3f3af1ecebbd1410ab417ec0d27bbfcb5d340e177ae159b59fc8626c2dfd9175',
         accessToken: '5270935051149081442358916296234999014127',
         bundlesUrl: './js',
-        staticResourcesUrl: './css'
+        staticCssUrl: './css',
+        staticResourcesUrl: './resources'
       },
       userContext: {
           id: 'admin',
@@ -76,7 +77,8 @@ function loadAsyncCssFile(file){
         var domApi = window.domApi;
         domApi.setResources({
           jsPath: this.__GLOBAL_STATIC_CONTEXT__.session.bundlesUrl,
-          cssPath: this.__GLOBAL_STATIC_CONTEXT__.session.staticResourcesUrl
+          cssPath: this.__GLOBAL_STATIC_CONTEXT__.session.staticCssUrl,
+          resourcesPath: this.__GLOBAL_STATIC_CONTEXT__.session.staticResourcesUrl
         });
         var registerBundleApi = bundleRegister();
         var createHeader = registerBundleApi.get('./bootstrap/header.js');

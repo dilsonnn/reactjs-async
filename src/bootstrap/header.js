@@ -32,7 +32,9 @@ class Header extends React.Component{
     var listOfMenus = e('ul', null, elements);
 
     return (<div className={styles.Header}>
-       <span>{ this.props.title }</span>
+       <div className={styles.Logo}>
+         <img src="./resources/img/logo.png" />
+       </div>
        {
          listOfMenus
        }

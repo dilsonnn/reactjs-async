@@ -119,15 +119,11 @@ function FileLoader(config) {
   // eslint-disable-next-line
   console.log('Initializing domAPI');
   var fileLoader;
-  this.setResources = function(config) {
-    fileLoader = new FileLoader(config);
-    window.__RESOURCES__INFO__= config;
+  this.setResources = function(loaderConfig) {
+    this.loaderConfig = loaderConfig;
+    fileLoader = new FileLoader(loaderConfig);
   };
   
-  this.getAssetUrl = function(){
-    return window.__ASSETS__URL;  
-  };    
-    
   class WidgetLoader extends React.Component {
     constructor(props) {
       super(props);
