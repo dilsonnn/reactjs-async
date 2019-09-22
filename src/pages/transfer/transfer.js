@@ -3,7 +3,7 @@ import React from 'react';
 
 (function(){
     bundleRegister().set('pages/transfer/transfer.js', function(){
-        const a = (<div>
+        const element = (<div>
           <h1>Provide your transaction details:</h1>
           <label>Beneficiary</label>
           <label>Adilson</label>
@@ -16,7 +16,7 @@ import React from 'react';
           </a>
           
         </div>);
-        return a;
+        return element;
     });
 
 })();

@@ -7,14 +7,18 @@ const commonConfig = {
     module: {
         rules: [
           {
-			test: /\.(scss|css)$/,
-			use: [
-			  MiniCssExtractPlugin.loader,
-			  'css-loader',
-			  'sass-loader',
-            ]
+            test: /\.(scss|css)$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: 'css-loader'
+              },
+              {
+                loader: 'sass-loader'
+              },
+            ],
          },
-		 {
+         {
             test: /\.(js|jsx)$/,
             exclude: /node_modules/,
             use: {
@@ -26,15 +30,16 @@ const commonConfig = {
 	devtool: 'source-map',
 	plugins: [
 		new MiniCssExtractPlugin({
-		  // Options similar to the same options in webpackOptions.output
-		  // both options are optional
-		  filename: '[name].css',
-		  chunkFilename: '[id].css',
-		})
-    ]
+   // Options similar to the same options in webpackOptions.output
+   // both options are optional
+	filename: '[name].css',
+	chunkFilename: '[id].css',
+	})
+ ]
 };
 const newConfig = (config) => {
-   return Object.assign({}, commonConfig, config);
+  const finalConfig = Object.assign({}, commonConfig, config);
+  return finalConfig;
 };
 
 const bootstrapFiles = newConfig({
@@ -51,6 +56,7 @@ const bootstrapFiles = newConfig({
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
+        ...commonConfig.plugins,
         new CopyPlugin([
           { from: './src/routes.js', to: 'routes.js' },
           { from: './src/bootstrap/header.css', to: 'bootstrap/header.css' },
@@ -74,4 +80,4 @@ const transferPage = newConfig({
 });
 
 //eslint-disable-next-line
-module.exports = [bootstrapFiles, transferPage]; 
+module.exports = [bootstrapFiles, transferPage];
