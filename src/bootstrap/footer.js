@@ -4,8 +4,8 @@ import styles from './footer.scss';
 bundleRegister().set('./bootstrap/footer.js', function (){
    const loader = domApi.WidgetLoader;
    const widget = loader({
-       file: './widgets/banner.js',
-       css: './widgets/banner.css',
+       file: 'widgets/banner.js',
+       css: 'widgets/banner.css',
        widgetRegister: widgetRegister(),
        loadingRender:<span className='loader'/>
    });

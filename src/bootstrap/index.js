@@ -44,8 +44,8 @@ function loadAsyncCssFile(file){
         licenseKey: '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a91',
         sessionId: '3f3af1ecebbd1410ab417ec0d27bbfcb5d340e177ae159b59fc8626c2dfd9175',
         accessToken: '5270935051149081442358916296234999014127',
-        bundlesUrl: './js',
-        staticCssUrl: './css',
+        bundlesUrl: 'js',
+        staticCssUrl: 'css',
         staticResourcesUrl: './resources'
       },
       userContext: {
