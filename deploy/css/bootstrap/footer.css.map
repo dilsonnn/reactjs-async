@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/bootstrap/footer.scss"],"names":[],"mappings":"AAAA,eAAe,WAAW,aAAa,yBAAyB,cAAc,iBAAiB,kBAAkB","file":"css/bootstrap/footer.css","sourcesContent":[".footer--1B9OT{width:100%;padding:1rem;background-color:#345995;color:#010101;font-size:1.5rem;position:absolute;bottom:0px}\n"],"sourceRoot":""}
