@@ -11,7 +11,12 @@ const commonConfig = {
             use: [
               MiniCssExtractPlugin.loader,
               {
-                loader: 'css-loader'
+                loader: 'css-loader',
+                options: {
+                  modules: {
+                    localIdentName: '[name]--[hash:base64:5]'
+                  }
+                }
               },
               {
                 loader: 'sass-loader'
@@ -59,10 +64,7 @@ const bootstrapFiles = newConfig({
         ...commonConfig.plugins,
         new CopyPlugin([
           { from: './src/routes.js', to: 'routes.js' },
-          { from: './src/bootstrap/header.css', to: 'bootstrap/header.css' },
-          { from: './src/widgets', to: 'widgets' },
           { from: './src/index.html', to: 'index.html' },
-          { from: './src/index.css', to: 'index.css' },
         ]),
       ],
 });

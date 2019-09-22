@@ -1,6 +1,7 @@
-/*global window,document,React,bundleRegister,Promise,ReactDOM,__GLOBAL_STATIC_CONTEXT__*/
+/*global window,document,bundleRegister,Promise*/
 import React from 'react';
 import ReactDOM from 'react-dom';
+import styles from './index.scss';
 function loadAsyncFile(fileName){
       return new Promise(function(success, reject){
         var script = document.createElement('script');
@@ -79,18 +80,17 @@ function loadAsyncCssFile(file){
     
     function renderApp(){
         var domApi = window.domApi;
-		console.log("render", this);
         domApi.setAssetUrl(this.__GLOBAL_STATIC_CONTEXT__.session.assetsUrl);
         var registerBundleApi = bundleRegister();
         var createHeader = registerBundleApi.get('./bootstrap/header.js');
         var createFooter = registerBundleApi.get('./bootstrap/footer.js');
         var e = React.createElement;
         var mainApp = e('div',{}, createHeader({ title: 'Foo bank'}),
-             e('div', { className: 'Container'}, domApi.Router({
+             e('div', { className: styles.Container}, domApi.Router({
               routes: this.applicationRoutes,
                bundleRegister: registerBundleApi,
                loadingRender: e('span', {
-               className: 'loader'
+               className: styles.loader
                  }, null
                 )
             })),

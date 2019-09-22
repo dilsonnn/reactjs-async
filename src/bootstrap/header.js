@@ -1,10 +1,12 @@
 import React from 'react';
+import styles from './header.scss';
 
 class Header extends React.Component{
     
   constructor(props){
     super(props);
-  }  
+  }
+
         
   render(){
     var menuOptionsLabels = ['Accounts', 'Profile', 'Security'];
@@ -28,9 +30,13 @@ class Header extends React.Component{
       e('li', {}, transferMoney)
     );
     var listOfMenus = e('ul', null, elements);
-    return e('div', { className: 'Header'}, [
-      e('span', null, this.props.title), listOfMenus
-    ]);
+
+    return (<div className={styles.Header}>
+       <span>{ this.props.title }</span>
+       {
+         listOfMenus
+       }
+    </div>);
   }
 }
 

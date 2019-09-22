@@ -1,6 +1,7 @@
 
-/*global React,widgetRegister */
+/*global widgetRegister */
 import React from 'react';
+import styles from './banner.scss';
 function randomFromArr(items){
   return items[Math.floor(Math.random() * items.length)];   
 }
@@ -14,7 +15,7 @@ widgetRegister().set('./widgets/banner.js', function(){
     var rates = [1, 2, 3];
     var investment = randomFromArr(invements);
     var rate = randomFromArr(rates);
-    return e('div', { className: 'Banner' }, e(
-      'div', { className: 'Investment'}, investment + ', with returns up to ' + rate + '%'
+    return e('div', { className: styles.Banner }, e(
+      'div', { className: styles.Investment}, investment + ', with returns up to ' + rate + '%'
     ));
 });
