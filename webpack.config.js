@@ -6,6 +6,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const JS_PATH = 'js';
 
 const commonConfig = {
+    resolve: {
+     extensions: ['.scss', '.jsx', '.js', '.ts', '.tsx']
+    },
     module: {
         rules: [
           {

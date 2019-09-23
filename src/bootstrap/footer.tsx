@@ -1,36 +1,16 @@
 /*global widgetRegister,bundleRegister,domApi */
 import React from 'react';
 import styles from './footer.scss';
+import registerApi from './registerApi';
 
-function init(message: string){
-	console.log(message);
-}
-
-declare global {
-    interface Window {
-		bundleRegister: any;
-		domApi: any;
-		widgetRegister: any;
-    }
-}
-
-
-window.bundleRegister = window.bundleRegister || {};
-window.domApi = window.domApi || {};
-
-declare var window: Window;
-
-window.bundleRegister().set('./bootstrap/footer.js', function (){
-   init('Loading footer');
-   const loader = window.domApi.WidgetLoader;
+registerApi().bundleRegister().set('./bootstrap/footer.js', () => {
+   const loader = registerApi().domApi.WidgetLoader;
    const widget = loader({
        file: 'widgets/banner.js',
        css: 'widgets/banner.css',
-       widgetRegister: window.widgetRegister(),
+       widgetRegister: registerApi().widgetRegister(),
        loadingRender:<span className='loader'/>
    });
-   
-   
    return (<div className={styles.Footer}>
      { widget }
    </div>);

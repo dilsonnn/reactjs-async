@@ -1,6 +1,7 @@
 /*global window,document,bundleRegister,Promise*/
 import React from 'react';
 import ReactDOM from 'react-dom';
+import registerApi from './registerApi';
 import styles from './index.scss';
 
 function loadAsyncFile(fileName){
@@ -74,7 +75,7 @@ function loadAsyncCssFile(file){
     layoutInitializer(layout)();
     
     function renderApp(){
-        var domApi = window.domApi;
+        var domApi = registerApi().domApi;
         domApi.setResources({
           jsPath: this.__GLOBAL_STATIC_CONTEXT__.session.bundlesUrl,
           cssPath: this.__GLOBAL_STATIC_CONTEXT__.session.staticCssUrl,
