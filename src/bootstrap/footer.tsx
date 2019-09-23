@@ -30,7 +30,8 @@ window.bundleRegister().set('./bootstrap/footer.js', function (){
        loadingRender:<span className='loader'/>
    });
    
+   
    return (<div className={styles.Footer}>
-     { React.cloneElement(widget) }
+     { widget }
    </div>);
 });

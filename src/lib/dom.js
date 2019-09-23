@@ -150,6 +150,7 @@ function FileLoader(config) {
     }
 
     render() {
+		
       if (!this.state.loaded) {
         if (this.props.loadingRender) {
           return this.props.loadingRender;
@@ -157,7 +158,7 @@ function FileLoader(config) {
         return null;
       }
       var widgetRender = this.props.widgetRegister.get(this.state.file);
-      if (typeof widgetRender === 'function') {
+	  if (typeof widgetRender === 'function') {
         return widgetRender(this.props);
       }
       return null;
