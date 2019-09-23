@@ -9,7 +9,6 @@ import styles from './index.scss';
 (function (){
 	var layout = [
       { file: 'routes.js'},
-      { file: 'lib/dom.js'},
       { file: 'bootstrap/footer.js', css: 'bootstrap/footer.css'},
       { file: 'bootstrap/header.js', css: 'bootstrap/header.css'}
     ];
@@ -23,7 +22,7 @@ import styles from './index.scss';
         accessToken: '5270935051149081442358916296234999014127',
         bundlesUrl: 'js',
         staticCssUrl: 'css',
-        staticResourcesUrl: './resources'
+        staticResourcesUrl: 'resources'
       },
       userContext: {
           id: 'admin',
@@ -34,16 +33,13 @@ import styles from './index.scss';
     
     function layoutInitializer(layoutEntries){
        return function initializeScripts(){
-          var currentScript = layoutEntries.shift();
+          const currentScript = layoutEntries.shift();
           if(!currentScript){
               return;
           }
-          loadAsyncFile("js/" + currentScript.file).then(function(){
-              initializeScripts();
-          });
-          
+		  const file = "js/" + currentScript.file;
+          loadAsyncFile(file).then(initializeScripts);
           currentScript.css && Promise.resolve(loadAsyncCssFile("css/" + currentScript.css));
-          
           return initializeScripts;
       };    
     }
@@ -51,29 +47,29 @@ import styles from './index.scss';
     layoutInitializer(layout)();
     
     function renderApp(){
-        var domApi = registerApi().domApi;
-        domApi.setResources({
+        const domApi = registerApi().domApi;
+		domApi.setResources({
           jsPath: this.__GLOBAL_STATIC_CONTEXT__.session.bundlesUrl,
           cssPath: this.__GLOBAL_STATIC_CONTEXT__.session.staticCssUrl,
           resourcesPath: this.__GLOBAL_STATIC_CONTEXT__.session.staticResourcesUrl
         });
-        var registerBundleApi = bundleRegister();
-        var createHeader = registerBundleApi.get('./bootstrap/header.js');
-        var createFooter = registerBundleApi.get('./bootstrap/footer.js');
-        var e = React.createElement;
-        var mainApp = e('div',{}, createHeader({ title: 'Foo bank'}),
-             e('div', { className: styles.Container}, domApi.Router({
+        const registerBundleApi = bundleRegister();
+        const createHeader = registerBundleApi.get('./bootstrap/header.js');
+        const createFooter = registerBundleApi.get('./bootstrap/footer.js');
+        const mainApp = (<div> 
+		 { createHeader({ title: 'Foo bank'}) }
+		 <div>
+		 {
+			 domApi.Router({
               routes: this.applicationRoutes,
-               bundleRegister: registerBundleApi,
-               loadingRender: e('span', {
-               className: styles.loader
-                 }, null
-                )
-            })),
-            createFooter({ title: ''})
-          
-          );
-          ReactDOM.render(mainApp, document.querySelector('#application'));
+              bundleRegister: registerBundleApi,
+              loadingRender: (<span className={styles.loader}/>)
+            })
+		 }
+		 </div>
+		 { createFooter({ title: 'Footer'}) }
+		</div>);
+		ReactDOM.render(mainApp, document.querySelector('#application'));
     }
     window.onload = renderApp.bind(this);
     

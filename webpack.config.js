@@ -43,7 +43,7 @@ const commonConfig = {
 	     }
         ]
     },
-	//devtool: 'source-map',
+//	devtool: 'source-map',
 	plugins: [
 		new MiniCssExtractPlugin({
    // Options similar to the same options in webpackOptions.output
@@ -76,7 +76,7 @@ const bootstrapFiles = newConfig({
         new CopyPlugin([
           { from: './src/routes.js', to: `${JS_PATH}/routes.js` },
           { from: './src/index.html', to: 'index.html' },
-          { from: './resources', to: `resources` },
+          { from: './resources', to: 'resources' },
         ]),
       ],
 });
