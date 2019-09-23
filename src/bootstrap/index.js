@@ -2,34 +2,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import registerApi from './registerApi';
+import { loadAsyncFile, loadAsyncCssFile } from '../lib/core.js';
 import styles from './index.scss';
 
-function loadAsyncFile(fileName){
-      return new Promise(function(success, reject){
-        var script = document.createElement('script');
-        script.src = fileName;
-        script.type = 'text/javascript';
-        script.async = true;
-        script.id = fileName;
-        script.onload = success;
-        script.onerror = reject;
-        document.body.appendChild(script);
-      });
-}
 
-
-function loadAsyncCssFile(file){
-   return new Promise(function(success, reject){
-     var css = document.createElement('link');  
-     css.rel = 'stylesheet';
-     css.type = 'text/css';
-     css.href = file;
-     css.id = file;
-     css.onerror = reject;
-     css.onload = success;
-     document.body.appendChild(css);
-   });
-}
 (function (){
 	var layout = [
       { file: 'routes.js'},

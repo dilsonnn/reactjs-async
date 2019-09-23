@@ -1,4 +1,3 @@
-/*global widgetRegister,bundleRegister,domApi */
 import React from 'react';
 import styles from './footer.scss';
 import registerApi from './registerApi';
