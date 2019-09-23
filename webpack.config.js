@@ -33,7 +33,11 @@ const commonConfig = {
             use: {
               loader: "babel-loader"
             }
-          }
+          },
+		  {
+			test: /\.tsx?$/,
+		    loader: 'awesome-typescript-loader' 
+	     }
         ]
     },
 	//devtool: 'source-map',
@@ -53,7 +57,7 @@ const newConfig = (config) => {
 
 const bootstrapFiles = newConfig({
     entry: {
-		'bootstrap/footer': './src/bootstrap/footer.js',
+		'bootstrap/footer': './src/bootstrap/footer.tsx',
 		'bootstrap/header': './src/bootstrap/header.js',
 		'bootstrap/index': './src/bootstrap/index.js',
 		'lib/dom': './src/lib/dom.js',

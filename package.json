@@ -8,7 +8,7 @@
   },
   "eslintConfig": {
     "env": {
-        "browser": true
+      "browser": true
     }
   },
   "scripts": {
@@ -20,6 +20,8 @@
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
+    "@types/react": "^16.9.2",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
@@ -29,6 +31,7 @@
     "prop-types": "^15.7.2",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
+    "typescript": "^3.6.3",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1"
