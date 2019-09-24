@@ -1,6 +1,9 @@
 import React from 'react';
 import styles from './header.scss';
 
+import registerApi from './registerApi';
+
+
 class Header extends React.Component{
     
   constructor(props){
@@ -42,7 +45,7 @@ class Header extends React.Component{
   }
 }
 
-bundleRegister().set('./bootstrap/header.js', function (props){
-  return React.createElement(Header, props, null);
+registerApi().bundleRegister().set('bootstrap/header.js', function (props){
+  return <Header {...props} />;
 });
 

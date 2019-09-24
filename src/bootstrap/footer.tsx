@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './footer.scss';
 import registerApi from './registerApi';
 
-registerApi().bundleRegister().set('./bootstrap/footer.js', () => {
+registerApi().bundleRegister().set('bootstrap/footer.js', () => {
    const loader = registerApi().domApi.WidgetLoader;
    const widget = loader({
        file: 'widgets/banner.js',

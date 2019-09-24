@@ -1,4 +1,4 @@
-/*global window,document,Promise,setTimeout */
+/*global window,document */
 import React from 'react';
 import { FileLoader, registerInternal } from './core.js';
 
@@ -57,8 +57,8 @@ window.widgetRegister = (function() {
         }
         return null;
       }
-      var widgetRender = this.props.widgetRegister.get(this.state.file);
-	  if (typeof widgetRender === 'function') {
+      const widgetRender = this.props.widgetRegister.get(this.state.file);
+      if (typeof widgetRender === 'function') {
         return widgetRender(this.props);
       }
       return null;

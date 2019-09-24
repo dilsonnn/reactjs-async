@@ -6,10 +6,6 @@ declare global {
     }
 }
 
-window.bundleRegister = window.bundleRegister || {};
-window.widgetRegister = window.widgetRegister || {};
-window.domApi = window.domApi || {};
-
 
 export default function(){
 	return {

@@ -1,16 +1,18 @@
-/*global window,document,bundleRegister,Promise*/
+/*global window,document,bundleRegister,React*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import registerApi from './registerApi';
 import { loadAsyncFile, loadAsyncCssFile } from '../lib/core.js';
 import styles from './index.scss';
+import { create } from 'domain';
 
 
 (function (){
-	var layout = [
+  const layout = [
+      { file: 'lib/dom.js'},
       { file: 'routes.js'},
-      { file: 'bootstrap/footer.js', css: 'bootstrap/footer.css'},
-      { file: 'bootstrap/header.js', css: 'bootstrap/header.css'}
+      { file: 'bootstrap/header.js', css: 'bootstrap/header.css'},
+      { file: 'bootstrap/footer.js', css: 'bootstrap/footer.css'}
     ];
     
     // Static rendered, should NEVER change during the session.
@@ -30,17 +32,15 @@ import styles from './index.scss';
       }
     });
     // End of static rendered.
-    
-    function layoutInitializer(layoutEntries){
-       return function initializeScripts(){
-          const currentScript = layoutEntries.shift();
-          if(!currentScript){
+    function layoutInitializer(scripts){
+      return function nextScript(){
+          const script = scripts.shift();
+          if(!script){
               return;
           }
-		  const file = "js/" + currentScript.file;
-          loadAsyncFile(file).then(initializeScripts);
-          currentScript.css && Promise.resolve(loadAsyncCssFile("css/" + currentScript.css));
-          return initializeScripts;
+          const file = "js/" + script.file;
+          loadAsyncFile(file).then(nextScript);
+          script.css && Promise.resolve(loadAsyncCssFile("css/" + script.css));
       };    
     }
     
@@ -48,28 +48,26 @@ import styles from './index.scss';
     
     function renderApp(){
         const domApi = registerApi().domApi;
-		domApi.setResources({
+        domApi.setResources({
           jsPath: this.__GLOBAL_STATIC_CONTEXT__.session.bundlesUrl,
           cssPath: this.__GLOBAL_STATIC_CONTEXT__.session.staticCssUrl,
           resourcesPath: this.__GLOBAL_STATIC_CONTEXT__.session.staticResourcesUrl
         });
         const registerBundleApi = bundleRegister();
-        const createHeader = registerBundleApi.get('./bootstrap/header.js');
-        const createFooter = registerBundleApi.get('./bootstrap/footer.js');
+        const createHeader = registerBundleApi.get('bootstrap/header.js');
+        const createFooter = registerBundleApi.get('bootstrap/footer.js');
         const mainApp = (<div> 
-		 { createHeader({ title: 'Foo bank'}) }
-		 <div>
-		 {
-			 domApi.Router({
+        { createHeader && createHeader({ title: 'Foo bank'}) }
+          <div> { domApi.Router({
               routes: this.applicationRoutes,
               bundleRegister: registerBundleApi,
               loadingRender: (<span className={styles.loader}/>)
             })
-		 }
-		 </div>
-		 { createFooter({ title: 'Footer'}) }
-		</div>);
-		ReactDOM.render(mainApp, document.querySelector('#application'));
+            }
+          </div>
+          { createFooter && createFooter({ title: 'Footer'}) }
+       </div>);
+       ReactDOM.render(mainApp, document.querySelector('#application'));
     }
     window.onload = renderApp.bind(this);
     
